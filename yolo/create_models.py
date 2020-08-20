@@ -1,5 +1,6 @@
 import tensorflow as tf
 import os
+import argparse
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] ='2'
 
@@ -28,7 +29,7 @@ class CreateResidualSection(tf.keras.Model):
         return tf.keras.layers.add([input,x])
 
 class CreateModel(tf.keras.Model):
-    def __init__(self):
+    def __init__(self,nclasses):
         super(CreateModel,self).__init__()
         self.co1= CreateConvolutionLayer(32,stride=1)
         self.co2= CreateConvolutionLayer(64)
@@ -65,7 +66,7 @@ class CreateModel(tf.keras.Model):
         self.co10= CreateConvolutionLayer(1024,stride=1)
         self.co11= CreateConvolutionLayer(512,stride=1,kern_size=(1,1))
         self.co12= CreateConvolutionLayer(1024,stride=1)
-        self.det1= CreateConvolutionLayer(255,stride=1,kern_size=(1,1))
+        self.det1= CreateConvolutionLayer(3*(nclasses + 5),stride=1,kern_size=(1,1))
         self.col13= CreateConvolutionLayer(256,stride=1,kern_size=(1,1))
         self.up1= tf.keras.layers.UpSampling2D(2)
         self.col14= CreateConvolutionLayer(256,stride=1,kern_size=(1,1))
@@ -74,7 +75,7 @@ class CreateModel(tf.keras.Model):
         self.col17= CreateConvolutionLayer(512,stride=1)
         self.col18= CreateConvolutionLayer(256,stride=1,kern_size=(1,1))
         self.col19= CreateConvolutionLayer(512,stride=1)
-        self.det2= CreateConvolutionLayer(255,stride=1,kern_size=(1,1))
+        self.det2= CreateConvolutionLayer(3*(nclasses + 5),stride=1,kern_size=(1,1))
         self.col20= CreateConvolutionLayer(128,stride=1,kern_size=(1,1))
         self.up2= tf.keras.layers.UpSampling2D(2)
         self.col21= CreateConvolutionLayer(128,stride=1,kern_size=(1,1))
@@ -83,7 +84,7 @@ class CreateModel(tf.keras.Model):
         self.col24= CreateConvolutionLayer(256,stride=1)
         self.col25= CreateConvolutionLayer(128,stride=1,kern_size=(1,1))
         self.col26= CreateConvolutionLayer(256,stride=1)
-        self.det3= CreateConvolutionLayer(255,stride=1,kern_size=(1,1))
+        self.det3= CreateConvolutionLayer(3*(nclasses + 5),stride=1,kern_size=(1,1))
 
 
 
@@ -162,5 +163,8 @@ class CreateModel(tf.keras.Model):
 
 
 if __name__ == '__main__':
-    model= CreateModel()
+    parser= argparse.ArgumentParser(description='No of classes to be entered')
+    parser.add_argument('classes',type=int)
+    args= parser.parse_args()
+    model= CreateModel(nclasses=args.classes)
     model.model().summary()
