@@ -164,7 +164,7 @@ class CreateModel(tf.keras.Model):
 
 if __name__ == '__main__':
     parser= argparse.ArgumentParser(description='No of classes to be entered')
-    parser.add_argument('classes',type=int)
+    parser.add_argument('noclasses',type=int)
     args= parser.parse_args()
-    model= CreateModel(nclasses=args.classes)
+    model= CreateModel(nclasses=args.noclasses)
     model.model().summary()
