@@ -2,3 +2,6 @@ venv
 utils.py
 data
 notebooks
+test.txt
+training.txt
+
