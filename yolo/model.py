@@ -61,7 +61,7 @@ class Darknet(tf.keras.Model):
         return [x,x1,x2]
 
 
-class Detection(tf.keras.Model):
+class Detection(tf.keras.layers.Layer):
     def __init__(self,n_channels):
         super(Detection,self).__init__()
         self.c1= [CreateConvolutionLayer(n_channels,stride=1,kern_size=(1,1)) for _ in range(3)]
