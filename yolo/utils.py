@@ -1,12 +1,8 @@
 import tensorflow as tf
 import os
 
-def read_image(image_path):
-    img= tf.io.read_file(image_path)
-    img= tf.image.decode_image(img,channels=3)
-    return img
 
-def resize_image(image_path,size):
+def read_and_resize_image(image_path,size):
     img= tf.io.read_file(image_path)
     img= tf.image.decode_image(img,channels=3)
     img= tf.image.resize(img, (size, size))
@@ -54,4 +50,3 @@ def parse_file(path):
         return tf.data.Dataset.from_tensor_slices((tf.constant(img_path_list), y_true))
 
 
-parse_file('training.txt')
