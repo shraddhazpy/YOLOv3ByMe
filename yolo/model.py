@@ -114,10 +114,11 @@ class YOLO(tf.keras.Model):
         return tf.keras.Model(inputs=[x],outputs= self.call(x))        
 
 
-
+'''
 if __name__ == '__main__':
     parser= argparse.ArgumentParser(description='No of classes to be entered')
     parser.add_argument('n_classes',type=int)
     args= parser.parse_args()
     model= YOLO(nclass=args.n_classes)
     model.model().summary()
+'''
